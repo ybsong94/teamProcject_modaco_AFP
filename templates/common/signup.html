@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+    <div class="row my-3">
+        <div class="col-4">
+            <h4>계정생성</h4>
+        </div>
+        <div class="col-8 text-right">
+            <span> 또는 <a href="{% url 'common:login' %}"> 로그인을 만들어주세요.</a></span>
+        </div>
+    </div>
+    <form method="post" class="post-form">
+
+    {% csrf_token %}
+    {% include "form_errors.html" %}
+    <fieldset>
+            <div class="form-group">
+      <label for="username" class="form-label mt-4">사용자 이름</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="Enter name"
+             value="{{ form.username.value|default_if_none:'' }}">
+    </div>
+
+    <div class="form-group">
+      <label for="password1" class="form-label mt-4">비밀번호</label>
+      <input type="password" class="form-control" id="password1" name="password1" placeholder="Password"
+             value="{{ form.password1.value|default_if_none:'' }}">
+    </div>
+
+    <div class="form-group">
+      <label for="password2" class="form-label mt-4">비밀번호 확인</label>
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password"
+         value="{{ form.password2.value|default_if_none:'' }}">
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label mt-4">이메일</label>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email"
+             value="{{ form.email.value|default_if_none:'' }}">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">회원가입</button>
+  </fieldset>
+</form>
+</div>
+{% endblock %}
