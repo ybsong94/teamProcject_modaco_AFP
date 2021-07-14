@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load question_filter %}
 {% block content %}
 <div class="container my-3">
 <table class="table table-hover">
@@ -13,9 +14,13 @@
     {% if question_list %}
     {% for question in question_list %}
     <tr class="table-secondary">
-      <th scope="row">{{ forloop.counter }}</th>
+      <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+      <th scope="row">{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter|add:1 }}</th>
       <td>
         <a href="{% url 'question:detail' question.id %}">{{ question.subject }}</a>
+        {% if question.answer_set.count > 0 %}
+        <span class="badge bg-primary rounded-pill">{{ question.answer_set.count }}</span>
+        {% endif %}
       </td>
       <td>{{ question.create_date }}</td>
     </tr>
