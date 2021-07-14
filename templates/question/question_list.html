@@ -4,9 +4,10 @@
 <div class="container my-3">
 <table class="table table-hover">
   <thead>
-    <tr>
+    <tr class="text-center thead-dark">
       <th scope="col">번호</th>
-      <th scope="col">제목</th>
+      <th style="width:50%">제목</th>
+      <th>글쓴이</th>
       <th scope="col">작성일시</th>
     </tr>
   </thead>
@@ -15,13 +16,14 @@
     {% for question in question_list %}
     <tr class="table-secondary">
       <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
-      <th scope="row">{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter|add:1 }}</th>
-      <td>
+      <th scope="row">{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</th>
+      <td class="text-left">
         <a href="{% url 'question:detail' question.id %}">{{ question.subject }}</a>
         {% if question.answer_set.count > 0 %}
         <span class="badge bg-primary rounded-pill">{{ question.answer_set.count }}</span>
         {% endif %}
       </td>
+      <td>{{ question.author.username }}</td>  <!-- 글쓴이 추가 -->
       <td>{{ question.create_date }}</td>
     </tr>
     {% endfor %}
