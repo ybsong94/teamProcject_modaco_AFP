@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,10 +76,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+pymysql.version_info = (1, 4, 2, "final", 0)
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
+    # superuser : admin / admin12345
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql', # 쓰려는 데이터베이스 종류
+        'HOST' : 'h2u.czp9kinbm4zk.ap-northeast-2.rds.amazonaws.com', # AWS엔드값
+        'NAME': 'SY', # 사용하려는 스키마
+        'USER' : 'admin', # 계정명
+        'PASSWORD' : 'dbh2u625!', # 비밀번호
+        'PORT' : '3306', # 접속포트 (mysql이라 3306이 기본값)
     }
 }
 
