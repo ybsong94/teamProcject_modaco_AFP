@@ -2,8 +2,18 @@
 {% load question_filter %}
 {% block content %}
 <div class="container my-3">
-  <div class="row justify-content-end my-3" style="float: right;">
+
+  <div class="row justify-content-between my-3" style="float: right;">
       <div class="col-4 input-group">
+
+        <div class="form-group" style="margin-right: 5px;">
+          <select class="form-control so">
+            <option value="recent" {% if so == 'recent' %}selected{% endif %}>최신순</option>
+            <option value="recommend" {% if so == 'recommend' %}selected{% endif %}>추천순</option>
+            <option value="popular" {% if so == 'popular' %}selected{% endif %}>인기순</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <input type="text" class="form-control kw" placeholder="Search" value="{{ kw|default_if_none:'' }}">
         </div>
@@ -11,11 +21,14 @@
           <button class="btn btn-secondary" type="button" id="btn_search">Search</button>
         </div>
       </div>
-    </div>
+
+  </div>
+
 <table class="table table-hover">
   <thead>
     <tr class="text-center thead-dark">
       <th scope="col">번호</th>
+      <th>추천</th>
       <th style="width:50%">제목</th>
       <th>글쓴이</th>
       <th scope="col">작성일시</th>
@@ -27,6 +40,11 @@
     <tr class="table-secondary">
       <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
       <th scope="row">{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</th>
+      <td style="text-align: center;">
+        {% if question.voter.all.count > 0 %}
+        <span class="badge bg-warning px-2 py-1">{{ question.voter.all.count }}</span>
+        {% endif %}
+      </td>
       <td class="text-left">
         <a href="{% url 'question:detail' question.id %}">{{ question.subject }}</a>
         {% if question.answer_set.count > 0 %}
@@ -93,6 +111,7 @@
 <form id="searchForm" method="get" action="{% url 'index' %}">
   <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
   <input type="hidden" id="page" name="page" value="{{ page }}">
+  <input type="hidden" id="so" name="so" value="{{ so }}">
 </form>
 {% endblock %}
 
@@ -107,6 +126,12 @@ $(document).ready(function(){
     $("#btn_search").on('click', function() {
         $("#kw").val($(".kw").val());
         $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#searchForm").submit();
+    });
+
+    $(".so").on('change', function() {
+        $("#so").val($(this).val());
+        $("#page").val(1);
         $("#searchForm").submit();
     });
 });

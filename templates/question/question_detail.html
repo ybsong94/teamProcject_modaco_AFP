@@ -15,8 +15,14 @@
 
 <!--질문시작-->
     <h3 class="border-bottom py-2">{{ question.subject }}</h3>
+
     <div class="alert alert-dismissible alert-light">
-        <div class="card-body">
+        <div class="badge bg-warning" style="margin: 10px;">
+            <div><h3>{{ question.voter.count }}</h3></div>
+            <a href="#" data-uri="{% url 'question:vote_question' question.id %}"
+               class="recommend btn btn-secondary btn-block my-1">추천</a>
+        </div>
+        <div class="card-body" style="margin: 10px;">
             <div class="card-text" style="color: black;">{{ question.content }}</div>
             {% if request.user == question.author %}
             <div class="my-3" style="text-align: right;">
@@ -75,6 +81,11 @@
    <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
     {% for answer in question.answer_set.all %}
     <div class="alert alert-dismissible alert-light" style="color: black;">
+        <div class="badge bg-warning" style="margin: 10px;">
+            <div><h3>{{ answer.voter.count }}</h3></div>
+            <a href="#" data-uri="{% url 'question:vote_answer' answer.id %}"
+               class="recommend btn btn-secondary btn-block my-1">추천</a>
+        </div>
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
 
@@ -161,6 +172,13 @@ $(document).ready(function(){
             location.href = $(this).data('uri');
         }
     });
+
+    $(".recommend").on('click', function() {
+        if(confirm("정말로 추천하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+
 });
 </script>
 {% endblock %}
