@@ -26,7 +26,7 @@ def question_modify(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if request.user != question.author:
         messages.error(request, '수정권한이 없습니다')
-        return redirect('pybo:detail', question_id=question.id)
+        return redirect('question:detail', question_id=question.id)
 
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)

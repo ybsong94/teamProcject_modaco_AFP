@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <form action="{% url 'photo:photo_create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h4>사진을 넣어주세요</h4>
+            <input type="file" name="file">
+            <input type="submit" class="btn btn-primary" value="Upload">
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

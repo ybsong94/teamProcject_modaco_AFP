@@ -22,4 +22,5 @@ urlpatterns = [
     path('', base_views.index, name='index'),
     path('common/', include('common.urls')),
     path('question/', include('question.urls')),
+    path('photo/', include('photo.urls')),
 ]
