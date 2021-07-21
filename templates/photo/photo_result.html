@@ -2,8 +2,10 @@
 
 {% block content %}
 <h3>인코딩성공</h3>
-{{ filepath }}<br>
+<img src="{% photo_object.url %}">
+{{ draw }}<br>
 {{ image }}<br>
 {{ res }}<br>
 {{ detection_len }}
+
 {% endblock %}
