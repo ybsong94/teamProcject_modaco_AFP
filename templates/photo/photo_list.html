@@ -7,7 +7,8 @@
         <div class="alert alert-dismissible alert-primary"><strong>{{ photo.author.username }}</strong> {{ photo.created }}</div>
           <div class="card-body" style="margin:10px; width:auto;">
             <img src="..{{ photo.photo.url }}" style="width:500px; margin:auto;">
-            <p class="card-text" style="margin: auto;">{{ photo.text }}</p>
+<!--            <p class="card-text" style="margin: auto;">{{ photo.text }}</p>-->
+              {{ photo.text }}
           </div>
     </div>
         {% endfor %}
