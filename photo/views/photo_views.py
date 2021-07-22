@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 import base64
 import requests, json
 import cv2
-import numpy as np
+
 import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -34,20 +34,25 @@ def photo_form(request):
 @login_required(login_url='common:login')
 def photo_create(request):
     if request.method == "POST":
+        # 서버에 보내는 파일
+        # image = request.FILES['file']
+
         # 로컬 저장 파일
         filepath = request.FILES['file']
         path = default_storage.save('content/'+filepath.name, ContentFile(filepath.read()))
         file = os.path.join(settings.MEDIA_ROOT, path)
+        print(file)
 
-        # 서버에 보내는 파일
-        image = request.FILES['file'] #파일 이름 ex)한상.jpg
-        encoding_img = base64.b64encode(image.read())
-        encoding_img = encoding_img.decode('utf8')
+        # image = cv2.imread(file, cv2.IMREAD_COLOR)
+        encoding_img=fileToBase64(file)
+        # encoding_img = base64.b64encode(image.read())
+        # encoding_img = encoding_img.decode('utf8')
+        # print(encoding_img+'$$$$$$$$$$$$$$$$$$$$$$$$$')
         datas = {'image': encoding_img}
         datas = json.dumps(datas)
 
         # 서버 주소
-        base_url = "http://3af2ecc4eaa8.ngrok.io"
+        base_url = "http://a31ec7fb36e7.ngrok.io"
         url = base_url + '/convert'
 
         # 서버로 보내기
@@ -68,16 +73,17 @@ def photo_create(request):
             return redirect('photo:photo_index')
         # form = PhotoForm(request.POST)
         # if form.is_valid():
+
         photo = Photo()
         photo.author = request.user
         photo.text = res
-        photo.photo = file.replace('/Users/ybsong/Documents/git/ybsong/django/teamProcject_modaco_AFP/media/', '')
+        photo.photo = file.replace('/Users/ybsong/Documents/git/ybsong/teamProcject_modaco_AFP/media/', '')
         photo.created = timezone.now()
         photo.save()
 
     else:
         form = PhotoForm()
-    context = {'image':image , 'res': res, 'detection_len':detection_len, 'draw': draw, 'file': file, 'form':photo}
+    context = {'res': res, 'detection_len':detection_len, 'draw': draw, 'file': file, 'form':photo}
     return render(request, 'photo/photo_result.html', context)
 
 def web_request(method_name, url, dict_data, is_urlencoded=True):
@@ -109,3 +115,9 @@ def drawing(result,src, file):
         cv2.rectangle(tmp, (left, top), (right, bottom), color, 2)
         cv2.putText(tmp, "{} [{:.2f}]".format(value[4], float(value[5])),(left, top - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,color, 2)
     return cv2.imwrite(file, tmp)
+
+def fileToBase64(filepath):
+    fp = open(filepath, "rb")
+    data = fp.read()
+    fp.close()
+    return base64.b64encode(data).decode('utf8')

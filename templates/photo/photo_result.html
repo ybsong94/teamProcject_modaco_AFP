@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3>인코딩성공</h3>
 <div class="container">
-    <img src="..{{ form.photo.url }}"><br>
-    {{ image }}<br>
-{{ res }}<br>
-{{ draw }}
-<a class="btn btn-primary" href="{% url 'photo:photo_list' %}">리스트</a>
+<div class="alert alert-dismissible alert-primary" style="margin-top:10px;"><strong>{{ form.author.username }}</strong> {{ form.created }}</div>
+     <div class="alert alert-dismissible alert-secondary" style="margin-top: 10px;">
+        <div class="card-body" style="margin:10px; width:auto;">
+            <img src="..{{ form.photo.url }}" style="width:500px; margin:auto;">
+            <strong>{{ res }}</strong>
+        </div>
+
+         <div>
+            <a class="btn btn-primary" href="{% url 'photo:photo_list' %}">더 많은 결과값 보기</a>
+         </div>
+     </div>
 </div>
 {% endblock %}

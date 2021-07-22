@@ -81,15 +81,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 pymysql.version_info = (1, 4, 2, "final", 0)
 pymysql.install_as_MySQLdb()
 
+# DATABASES = {
+#     # superuser : admin / admin12345
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', # 쓰려는 데이터베이스 종류
+#         'HOST' : 'h2u.czp9kinbm4zk.ap-northeast-2.rds.amazonaws.com', # AWS엔드값
+#         'NAME': 'SY', # 사용하려는 스키마
+#         'USER' : 'admin', # 계정명
+#         'PASSWORD' : 'dbh2u625!', # 비밀번호
+#         'PORT' : '3306', # 접속포트 (mysql이라 3306이 기본값)
+#     }
+# }
+
 DATABASES = {
-    # superuser : admin / admin12345
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # 쓰려는 데이터베이스 종류
-        'HOST' : 'h2u.czp9kinbm4zk.ap-northeast-2.rds.amazonaws.com', # AWS엔드값
-        'NAME': 'SY', # 사용하려는 스키마
-        'USER' : 'admin', # 계정명
-        'PASSWORD' : 'dbh2u625!', # 비밀번호
-        'PORT' : '3306', # 접속포트 (mysql이라 3306이 기본값)
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
