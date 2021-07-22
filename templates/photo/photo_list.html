@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="padding:10px;">
+        {% for photo in photos %}
+    <div class="card border-primary mb-3" style="margin:auto;">
+        <div class="alert alert-dismissible alert-primary"><strong>{{ photo.author.username }}</strong> {{ photo.created }}</div>
+          <div class="card-body" style="margin:10px; width:auto;">
+            <img src="..{{ photo.photo.url }}" style="width:500px; margin:auto;">
+            <p class="card-text" style="margin: auto;">{{ photo.text }}</p>
+          </div>
+    </div>
+        {% endfor %}
+</div>
+
+{% endblock %}

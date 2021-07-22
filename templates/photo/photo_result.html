@@ -2,10 +2,11 @@
 
 {% block content %}
 <h3>인코딩성공</h3>
-<img src="{% photo_object.url %}">
-{{ draw }}<br>
-{{ image }}<br>
+<div class="container">
+    <img src="..{{ form.photo.url }}"><br>
+    {{ image }}<br>
 {{ res }}<br>
-{{ detection_len }}
-
+{{ draw }}
+<a class="btn btn-primary" href="{% url 'photo:photo_list' %}">리스트</a>
+</div>
 {% endblock %}

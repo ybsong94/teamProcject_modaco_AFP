@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Photo(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_photo')
-    photo = models.ImageField(upload_to='photos/')
+    photo = models.ImageField(upload_to='convert/')
     text = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -15,6 +15,8 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.author.username + " " + self.created.strftime("%Y-%m-%d %H:%M:%S")
+
+
 
     def get_absolute_url(self):
         return reverse('photo:photo_detail', arg=[self.id])

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'question:index' %}">ModacoFood</a>
+    <a class="navbar-brand" href="{% url 'photo:photo_index' %}">ModacoFood</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,13 +19,13 @@
           {% endif %}
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'photo:photo_index' %}">FoodService</a>
+          <a class="nav-link" href="{% url 'photo:photo_form' %}">FoodService</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'photo:photo_list' %}">FoodList</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'question:index' %}">Q&A</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
         </li>
 
       </ul>

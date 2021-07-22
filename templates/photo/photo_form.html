@@ -1,18 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <form action="{% url 'photo:photo_create' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h4>사진을 넣어주세요</h4>
-            <input type="file" name="file" onchange="readURL(this);">
-            <img id="preview" src="#" alt="your image">
-            <input type="submit" class="btn btn-primary" value="Upload">
-        </form>
+<div class="container">
+    <div class="alert alert-dismissible alert-secondary" style="margin-top: 10px;">
+    <strong>사진을 분석해드립니다</strong>
     </div>
-    <div class="col-md-2"></div>
+
+    <div class="alert alert-dismissible alert-secondary">
+    <form action="{% url 'photo:photo_create' %}" method="post" enctype="multipart/form-data" style="margin: 10px;">
+            {% csrf_token %}
+
+        <!-- 오류표시 Start -->
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+                {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+
+        <fieldset>
+          <div class="form-group">
+              <img id="preview" src="#" name="image" alt="사진을 넣어주세요">
+            <input class="form-control mb-3" type="file" name="file" onchange="readURL(this);" style="margin-top:10px;">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Analysis</button>
+        </fieldset>
+    </form>
+    </div>
 </div>
 
 <script type="text/javascript">

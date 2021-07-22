@@ -8,25 +8,35 @@ import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
+from django.utils import timezone
 
 from ..models import Photo
 from ..forms import PhotoForm
 
 def index(request):
 
-    return render(request, 'photo/photo_form.html')
+    return render(request, 'photo/photo_index.html')
 
 # def detail(requset, photo_id):
 #     photo = get_object_or_404(Photo, pk=photo_id)
 #     context = {'photo': photo}
 #     return render(requset, 'photo/photo_detail.html', context)
 
+def photo_list(request):
+    photos = Photo.objects.all()
+    context = {'photos':photos}
+    return render(request, 'photo/photo_list.html', context)
+
+@login_required(login_url='common:login')
+def photo_form(request):
+    return render(request, 'photo/photo_form.html')
+
 @login_required(login_url='common:login')
 def photo_create(request):
     if request.method == "POST":
         # 로컬 저장 파일
         filepath = request.FILES['file']
-        path = default_storage.save('content/test.jpg', ContentFile(filepath.read()))
+        path = default_storage.save('content/'+filepath.name, ContentFile(filepath.read()))
         file = os.path.join(settings.MEDIA_ROOT, path)
 
         # 서버에 보내는 파일
@@ -54,10 +64,20 @@ def photo_create(request):
                   '6': [356, 38, 446, 136, 'kkatip', 0.839], '7': [193, 211, 299, 329, 'mookoook', 0.48]}
         src = cv2.imread(file, cv2.IMREAD_COLOR)
         draw =drawing(result, src, file)
+        if draw == False:
+            return redirect('photo:photo_index')
+        # form = PhotoForm(request.POST)
+        # if form.is_valid():
+        photo = Photo()
+        photo.author = request.user
+        photo.text = res
+        photo.photo = file.replace('/Users/ybsong/Documents/git/ybsong/django/teamProcject_modaco_AFP/media/', '')
+        photo.created = timezone.now()
+        photo.save()
 
     else:
-        pass
-    context = {'image':image , 'res': res, 'detection_len':detection_len, 'draw': draw, 'filepath': file}
+        form = PhotoForm()
+    context = {'image':image , 'res': res, 'detection_len':detection_len, 'draw': draw, 'file': file, 'form':photo}
     return render(request, 'photo/photo_result.html', context)
 
 def web_request(method_name, url, dict_data, is_urlencoded=True):
@@ -78,8 +98,6 @@ def web_request(method_name, url, dict_data, is_urlencoded=True):
         return {**dict_meta, **response.json()}
     else:  # 문자열 형태인 경우
         return {**dict_meta, **{'text': response.text}}
-
-
 
 def drawing(result,src, file):
     color = (0,255,0)

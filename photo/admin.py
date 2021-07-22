@@ -7,5 +7,6 @@ from .models import Photo
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ['id','author','photo','created']
     ordering = ['-created']
+    list_display_links = ['photo']
 
 admin.site.register(Photo, PhotoAdmin)
