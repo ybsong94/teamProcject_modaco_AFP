@@ -17,11 +17,6 @@ def index(request):
 
     return render(request, 'photo/photo_index.html')
 
-# def detail(requset, photo_id):
-#     photo = get_object_or_404(Photo, pk=photo_id)
-#     context = {'photo': photo}
-#     return render(requset, 'photo/photo_detail.html', context)
-
 def photo_list(request):
     photos = Photo.objects.all()
     context = {'photos':photos}
@@ -43,31 +38,30 @@ def photo_create(request):
         file = os.path.join(settings.MEDIA_ROOT, path)
         print(file)
 
-        # image = cv2.imread(file, cv2.IMREAD_COLOR)
-        encoding_img=fileToBase64(file)
-        # encoding_img = base64.b64encode(image.read())
-        # encoding_img = encoding_img.decode('utf8')
-        # print(encoding_img+'$$$$$$$$$$$$$$$$$$$$$$$$$')
+        encoding_img = fileToBase64(file)
         datas = {'image': encoding_img}
         datas = json.dumps(datas)
 
         # 서버 주소
-        base_url = "http://a31ec7fb36e7.ngrok.io"
+        base_url = "http://d9f222e034c9.ngrok.io"
         url = base_url + '/convert'
 
         # 서버로 보내기
         # res = "test"
-        # res = web_request(method_name='POST', url=url, dict_data=datas) #결과값
-        # del res['status_code']
-        # del res['encoding']
-        # del res['Content-Type']
-        # del res['ok']
-        # detection_len = len(res) #데이터 개수
-        res = {'0': [275, 127, 358, 212, 'umook', 1.0], '1': [264, 46, 320, 110, 'gaeranmalee', 0.574],
-                  '2': [179, 44, 246, 107, 'kongnamul', 0.99], '3': [78, 223, 174, 319, 'rice', 1.0],
-                  '4': [102, 52, 162, 102, 'kimchigeon', 1.0], '5': [113, 116, 228, 213, 'kimchigeon', 1.0],
-                  '6': [356, 38, 446, 136, 'kkatip', 0.839], '7': [193, 211, 299, 329, 'mookoook', 0.48]}
-        # print(res['0'][4])
+        res = web_request(method_name='POST', url=url, dict_data=datas) #결과값
+        del res['status_code']
+        del res['encoding']
+        del res['Content-Type']
+        del res['ok']
+        foods = ['dontgas', 'gaeranmalee', 'gamjache', 'jaeukbookum', 'kimchigeon', 'kimchi_baechu', 'kkakdugi',
+                 'kkatip', 'kongnamul', 'mookoook', 'rice', 'sausagebokum', 'ugugikook', 'umook']
+        # res = {'0': [275, 127, 358, 212, 'umook', 1.0], '1': [264, 46, 320, 110, 'gaeranmalee', 0.574],
+        #           '2': [179, 44, 246, 107, 'kongnamul', 0.99], '3': [78, 223, 174, 319, 'rice', 1.0],
+        #           '4': [102, 52, 162, 102, 'kimchigeon', 1.0], '5': [113, 116, 228, 213, 'kimchigeon', 1.0],
+        #           '6': [356, 38, 446, 136, 'kkatip', 0.839], '7': [193, 211, 299, 329, 'mookoook', 0.48]}
+        detection_len = len(res) #데이터 개수
+
+        # 음식이름 뽑아내기
         namelist = []
         for key, value in res.items():
             namelist.append(value[4])
@@ -76,8 +70,8 @@ def photo_create(request):
         draw =drawing(res, src, file)
         if draw == False:
             return redirect('photo:photo_index')
-        # form = PhotoForm(request.POST)
-        # if form.is_valid():
+        else:
+            draw = 'Analysis Completed'
 
         photo = Photo()
         photo.author = request.user
@@ -88,11 +82,12 @@ def photo_create(request):
 
     else:
         form = PhotoForm()
-    context = {'res': res,
-               # 'detection_len':detection_len,
-               'draw': draw,
-               'file': file,
-               'form':photo
+    context = {
+        # 'res': res,
+        'detection_len':detection_len,
+        'draw': draw,
+        # 'file': file,
+        'form':photo
                }
     return render(request, 'photo/photo_result.html', context)
 

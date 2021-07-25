@@ -15,7 +15,7 @@ def question_create(request):
             question.author = request.user
             question.create_date = timezone.now()
             question.save()
-            return redirect('question:index')
+            return redirect('question:base_index')
     else:
         form = QuestionForm()
     context = {'form': form}

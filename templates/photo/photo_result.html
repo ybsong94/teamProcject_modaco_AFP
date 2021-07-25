@@ -6,7 +6,11 @@
      <div class="alert alert-dismissible alert-secondary" style="margin-top: 10px;">
         <div class="card-body" style="margin:10px; width:auto;">
             <img src="..{{ form.photo.url }}" style="width:500px; margin:auto;">
-            <p><strong>{{ form.text }}</strong></p>
+            <div style="margin-top:10px;">
+             <span class="badge bg-success">{{ draw }}</span>
+                <p class="text-success">We have found something : {{ detection_len }}</p>
+                <p><strong>{{ form.text }}</strong></p>
+            </div>
         </div>
 
          <div>
