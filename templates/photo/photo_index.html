@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load static %}
 <div class="alert alert-dismissible alert-warning" style="margin: 10px;">
     <h2>ModacoFood에 오신것을 환영합니다!</h2>
     <strong><p>한식만을 위한 <a href="{% url 'photo:photo_form' %}">사진 분석</a>을 마음껏 이용해보세요.</p></strong>
@@ -15,7 +15,7 @@
     <div class="card-header"><strong>네트워크 구성도</strong></div>
 
     <div class="card-body">
-      <img src="media/analysis/네트워크 구성도.png" style="height:600px;">
+      <img src="{% static 'analysis/네트워크 구성도.png' %}" style="height:600px;">
       <div class="card-text">
         <p>유저가 사진을 올리면 장고서버는 api를 호출함과 동시에 이미지 정보를 보내고, api에서는 해당 음식 이미지를 분석하고 결과를 장고서버로 반환합니다.</p>
         <p>장고서버에서는 분석결과를 바탕으로 음식 이미지를 새로 그리고 해당 정보를 유저에게 제공합니다.</p>
@@ -27,10 +27,10 @@
     <div class="card-header"><strong>다중 경계값 분석 Object Analysis</strong></div>
 
     <div class="card-body">
-      <img src="media/analysis/다중경계값분석1.png" style="width:600px; height: 400px;">
-      <img src="media/analysis/다중경계값분석2.png" style="width:600px; height: 400px;">
-      <img src="media/analysis/다중경계값분석3.png" style="width:600px; height: 400px;">
-      <img src="media/analysis/다중경계값분석결과.png" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/다중경계값분석1.png' %}" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/다중경계값분석2.png' %}" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/다중경계값분석3.png' %}" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/다중경계값분석결과.png' %}" style="width:600px; height: 400px;">
 
       <div class="card-text">
         <p>1000개의 이미지 yolo darknet mask로 음식과 음식이 아닌 사물간 구별만을 위한 학습였습니다.</p>
@@ -44,8 +44,8 @@
     <div class="card-header"><strong>개별 음식 분석 Individual Food Analysis</strong></div>
 
     <div class="card-body">
-      <img src="media/analysis/개별음식분석.png" style="width:600px; height: 400px;">
-      <img src="media/analysis/개별음식분석결과.png" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/개별음식분석.png' %}" style="width:600px; height: 400px;">
+      <img src="{% static 'analysis/개별음식분석결과.png' %}" style="width:600px; height: 400px;">
 
       <div class="card-text">
         <p>학습, 검증, 시험 데이터로 나누어 진행하였고, 웹 크롤링을 통해 데이터수집을 하여도 결국 사람의 눈으로 가려내야하는 일였습니다.</p>
@@ -60,17 +60,17 @@
 
     <div class="card-body">
       <div class="card-text" style="margin:10px;">
-        <img src="media/analysis/windows10.png" style="width:500px; height: 100px; margin-bottom: 20px;">
+        <img src="{% static 'analysis/windows10.png' %}" style="width:500px; height: 100px; margin-bottom: 20px;">
         <h4 class="card-title">빌드가 어렵다.</h4>
         <p>linux에서 make한번 치면 될 것을 모든 환경을 똑같이 맞춘 visual studio에서 진행해야 했습니다.</p>
       </div>
       <div class="card-text" style="margin:10px;">
-        <img src="media/analysis/anaconda.png" style="width:500px; height: 250px;">
+        <img src="{% static 'analysis/anaconda.png' %}" style="width:500px; height: 250px;">
         <h4 class="card-title">GPU가 안된다.</h4>
         <p>가상환경에서 nvidia관련 버전을 똑같이 맞추어도 GPU성능이 3GB라 학습 도중 실패했습니다.</p>
       </div>
       <div class="card-text" style="margin:10px;">
-        <img src="media/analysis/aws.png" style="width:500px; height: 200px; margin-bottom: 20px;">
+        <img src="{% static 'analysis/aws.png' %}" style="width:500px; height: 200px; margin-bottom: 20px;">
         <h4 class="card-title">마찬가지로 GPU</h4>
         <p>AWS에서 딥러닝을 위한 GPU가 있는 EC2를 사용하기위해선 돈이 필요했습니다.</p>
       </div>
