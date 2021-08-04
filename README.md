@@ -23,7 +23,16 @@
 
 ## 구현기능 설명
 1. HOME
+* 프로젝트를 시작한 계기, 모델링 진행 및 애로사항 등을 소개
+* 사진분석 링크 클릭시 FoodService(url 'photo:photo_form')실행
+* 전체적인 화면구성을 bootstrap을 이용하여 반응형 웹과 내비바 등 기능 구현
+* photo앱에서 구현
+<img width="1440" alt="index" src="https://user-images.githubusercontent.com/86213046/128174324-6c257f2a-9d68-40d0-bec2-fe69271145fa.png">
+<img width="616" alt="indexSmall" src="https://user-images.githubusercontent.com/86213046/128174383-bebc3023-0807-46c3-b026-7c428305074e.png">
+
 2. Food Service
+<img width="1440" alt="FoodService" src="https://user-images.githubusercontent.com/86213046/128175229-a7f1b26d-fb3f-4434-b060-ed21f1389c7e.png">
+* 
 3. Food List
 4. 고객센터
 5. 회원
