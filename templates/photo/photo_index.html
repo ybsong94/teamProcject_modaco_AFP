@@ -1,20 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Example body text</h2>
-<p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-<p><small>This line of text is meant to be treated as fine print.</small></p>
-<p>The following is <strong>rendered as bold text</strong>.</p>
-<p>The following is <em>rendered as italicized text</em>.</p>
-<p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
 
-<figure>
-  <blockquote class="blockquote">
-    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+<div class="alert alert-dismissible alert-warning" style="margin: 10px;">
+    <h2>ModacoFood에 오신것을 환영합니다!</h2>
+    <strong><p>한식만을 위한 <a href="{% url 'photo:photo_form' %}">사진 분석</a>을 마음껏 이용해보세요.</p></strong>
 
-  </blockquote>
-  <figcaption class="blockquote-footer">
-    Someone famous in <cite title="Source Title">Source Title</cite>
-  </figcaption>
-</figure>
+  <div class="alert alert-dismissible alert-primary">
+      <small><p><em>현재 쉽게 찾을 수 있는 Image Detection 프로그램들은 대부분 양식을 찾는데 집중하고 있습니다.
+        한식만을 위한 Image Detection 프로그램을 개발하고자 프로젝트를 시작하였습니다</em>.</p></small>
+  </div>
+
+  <div class="card border-primary">
+    <div class="card-header"><strong>네트워크 구성도</strong></div>
+
+    <div class="card-body">
+      <img src="media/analysis/네트워크 구성도.png" style="height:600px;">
+      <div class="card-text">
+        <p>유저가 사진을 올리면 장고서버는 api를 호출함과 동시에 이미지 정보를 보내고, api에서는 해당 음식 이미지를 분석하고 결과를 장고서버로 반환합니다.</p>
+        <p>장고서버에서는 분석결과를 바탕으로 음식 이미지를 새로 그리고 해당 정보를 유저에게 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-primary" style="margin-top:10px;">
+    <div class="card-header"><strong>다중 경계값 분석 Object Analysis</strong></div>
+
+    <div class="card-body">
+      <img src="media/analysis/다중경계값분석1.png" style="width:600px; height: 400px;">
+      <img src="media/analysis/다중경계값분석2.png" style="width:600px; height: 400px;">
+      <img src="media/analysis/다중경계값분석3.png" style="width:600px; height: 400px;">
+      <img src="media/analysis/다중경계값분석결과.png" style="width:600px; height: 400px;">
+
+      <div class="card-text">
+        <p>1000개의 이미지 yolo darknet mask로 음식과 음식이 아닌 사물간 구별만을 위한 학습였습니다.</p>
+        <p>GPU의 성능이 가장 중요한 이슈였고, 라이브러리 버전 일치도 중요했습니다. GPU 메모리 24GB를 제공하고, 최신 라이브러리를 제공하는 colab을 사용하여 학습하였습니다.</p>
+        <p>학습용 이미지에 음식이 다양하다면 각각 구획을 나누어 개별 음식임을 기록했습니다. 하나의 음식 사진이라도 정확한 학습을 위해서 구획을 따로 지정하도록 했습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-primary" style="margin-top:10px;">
+    <div class="card-header"><strong>개별 음식 분석 Individual Food Analysis</strong></div>
+
+    <div class="card-body">
+      <img src="media/analysis/개별음식분석.png" style="width:600px; height: 400px;">
+      <img src="media/analysis/개별음식분석결과.png" style="width:600px; height: 400px;">
+
+      <div class="card-text">
+        <p>학습, 검증, 시험 데이터로 나누어 진행하였고, 웹 크롤링을 통해 데이터수집을 하여도 결국 사람의 눈으로 가려내야하는 일였습니다.</p>
+        <p>해당 모델의 경우 음식종류가 13가지뿐, 밥과 콩나물만 맞췄습니다.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-primary" style="margin-top:10px;">
+    <div class="card-header"><strong>분석 중 애로사항</strong></div>
+
+    <div class="card-body">
+      <div class="card-text" style="margin:10px;">
+        <img src="media/analysis/windows10.png" style="width:500px; height: 100px; margin-bottom: 20px;">
+        <h4 class="card-title">빌드가 어렵다.</h4>
+        <p>linux에서 make한번 치면 될 것을 모든 환경을 똑같이 맞춘 visual studio에서 진행해야 했습니다.</p>
+      </div>
+      <div class="card-text" style="margin:10px;">
+        <img src="media/analysis/anaconda.png" style="width:500px; height: 250px;">
+        <h4 class="card-title">GPU가 안된다.</h4>
+        <p>가상환경에서 nvidia관련 버전을 똑같이 맞추어도 GPU성능이 3GB라 학습 도중 실패했습니다.</p>
+      </div>
+      <div class="card-text" style="margin:10px;">
+        <img src="media/analysis/aws.png" style="width:500px; height: 200px; margin-bottom: 20px;">
+        <h4 class="card-title">마찬가지로 GPU</h4>
+        <p>AWS에서 딥러닝을 위한 GPU가 있는 EC2를 사용하기위해선 돈이 필요했습니다.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
 {% endblock %}

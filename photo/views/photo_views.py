@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import base64
 import requests, json
@@ -47,18 +47,18 @@ def photo_create(request):
         url = base_url + '/convert'
 
         # 서버로 보내기
-        # res = "test"
-        res = web_request(method_name='POST', url=url, dict_data=datas) #결과값
-        del res['status_code']
-        del res['encoding']
-        del res['Content-Type']
-        del res['ok']
+
+        # res = web_request(method_name='POST', url=url, dict_data=datas) #결과값
+        # del res['status_code']
+        # del res['encoding']
+        # del res['Content-Type']
+        # del res['ok']
         foods = ['dontgas', 'gaeranmalee', 'gamjache', 'jaeukbookum', 'kimchigeon', 'kimchi_baechu', 'kkakdugi',
                  'kkatip', 'kongnamul', 'mookoook', 'rice', 'sausagebokum', 'ugugikook', 'umook']
-        # res = {'0': [275, 127, 358, 212, 'umook', 1.0], '1': [264, 46, 320, 110, 'gaeranmalee', 0.574],
-        #           '2': [179, 44, 246, 107, 'kongnamul', 0.99], '3': [78, 223, 174, 319, 'rice', 1.0],
-        #           '4': [102, 52, 162, 102, 'kimchigeon', 1.0], '5': [113, 116, 228, 213, 'kimchigeon', 1.0],
-        #           '6': [356, 38, 446, 136, 'kkatip', 0.839], '7': [193, 211, 299, 329, 'mookoook', 0.48]}
+        res = {'0': [275, 127, 358, 212, 'umook', 1.0], '1': [264, 46, 320, 110, 'gaeranmalee', 0.574],
+                  '2': [179, 44, 246, 107, 'kongnamul', 0.99], '3': [78, 223, 174, 319, 'rice', 1.0],
+                  '4': [102, 52, 162, 102, 'kimchigeon', 1.0], '5': [113, 116, 228, 213, 'kimchigeon', 1.0],
+                  '6': [356, 38, 446, 136, 'kkatip', 0.839], '7': [193, 211, 299, 329, 'mookoook', 0.48]}
         detection_len = len(res) #데이터 개수
 
         # 음식이름 뽑아내기
